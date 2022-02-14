@@ -1,0 +1,19 @@
+"-*- mode: org -*-
+#+STARTUP: showall
+
+* Anteckningar för ik1203 vt22
+Dessa anteckningar är tagna av Axel Karlsson
+Inga garantier!
+Det är också ett sätt för mig att lära mig orgmode
+
+** Underrubrik
+*** Igen
+**** Hur många färger?
+***** finns
+****** det
+******* hmm
+******** spännande
+********* aaa
+************ varför blev texten större?
+************** thunking
+*************** tror den väljer slumpmässiga färger

@@ -1,0 +1,51 @@
+/*
+  1) Skapa socket
+  2) Skapa förbindelse
+  3) Skicka
+  4) Ta emot (vänta)
+  5) Stäng ner
+ */
+
+
+package tcpclient;
+import java.net.*;
+import java.io.*;
+
+public class TCPClient {
+    
+    public TCPClient() {
+	
+    }
+
+    public byte[] askServer(String hostname, int port, byte [] toServerBytes) throws IOException {
+	
+	byte[] fromServerBuff = new byte[1024]; // Fixerad storlek, läser direkt från socket
+	ByteArrayOutputStream fromServerStream = new ByteArrayOutputStream(); // Flexibel storlek, spara all data läst hittils
+	
+	Socket clientSock = new Socket(hostname, port); // Skapa socket & anslut
+	clientSock.getOutputStream().write(toServerBytes); // Skriv bytes till socket
+
+	fromServerStream.write(fromServerBuff); // Kopplar socket till outputstream
+
+	boolean go = true;
+	// Läs tills vi hittar '\n'
+	while(go) {
+	    clientSock.getInputStream().read(fromServerBuff); // Läser från socket, skriv till fromServerBuff
+	    go = checkEOF(fromServerBuff);
+	    fromServerStream.write(fromServerBuff);
+	}
+	clientSock.close();
+        return fromServerStream.toByteArray(); // Blir detta som en array?
+    }
+
+    // Kollar om det finns 2 \n i byte array
+    public boolean checkEOF(byte[] arr) {
+	byte check;
+	for(int i = 0; i < arr.length; i++) {
+	    if (arr[i] == '\n' && arr[i + 1] == '\n') {
+		return true;
+	    }
+	}
+	return false;
+    }				     
+}

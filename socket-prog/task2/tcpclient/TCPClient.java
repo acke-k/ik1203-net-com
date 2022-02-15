@@ -1,26 +1,16 @@
-/*
-  1) Skapa socket
-  2) Skapa förbindelse
-  3) Skicka
-  4) Ta emot (vänta)
-  5) Stäng ner
- */
-
-
 package tcpclient;
 import java.net.*;
 import java.io.*;
-import java.util.Arrays;
 
 public class TCPClient {
+    // Shutdown: Om true, stäng socket outgoing
     
-    public TCPClient() {
+    public TCPClient(boolean shutdown, Integer timeout, Integer limit) {
 	
     }
 
     public byte[] askServer(String hostname, int port, byte [] toServerBytes) throws IOException {
-
-	// byte[] fromServerBuff = new byte[1024]; //b Buffert mellan socket och outputstream
+	
 	int fromServerBuff = 0;
 	ByteArrayOutputStream toClientStream = new ByteArrayOutputStream(); 
 	
@@ -31,14 +21,14 @@ public class TCPClient {
 	
        	while(true) {
 	    fromServerBuff = fromServerStream.read();
-	    //System.out.println(fromServerBuff);
 	    // Om vi får eom 
 	    if (fromServerBuff == -1) {
 		break;
 	    }
 	    toClientStream.write(fromServerBuff); // Buffert -> outputstream
 	}
-	//System.out.println(Arrays.toString(toClientStream.toByteArray()));
 	return toClientStream.toByteArray();
     }    
+}
+
 }
